@@ -6,6 +6,10 @@ import com.sp.jobportal.Repositories.UsersRepository;
 import com.sp.jobportal.entities.JobSeekerProfile;
 import com.sp.jobportal.entities.RecruiterProfile;
 import com.sp.jobportal.entities.Users;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +55,25 @@ public class UsersService {
     public Optional<Users> getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
+
+    public Object getCurrentUserProfile() {
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    if(!(auth instanceof AnonymousAuthenticationToken)){
+        String username = auth.getName();
+        Users users = usersRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
+        int userId = users.getUserId();
+        if(auth.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))){
+            RecruiterProfile recruiterProfile = recuiterProfileRepository.findById(userId).orElse(new RecruiterProfile());
+            return recruiterProfile;
+        }else{
+            JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(userId).orElse(new JobSeekerProfile());
+            return jobSeekerProfile;
+        }
+    }
+    return null;
+    }
+
 
 }
