@@ -1,8 +1,11 @@
 package com.sp.jobportal.services;
 
 import com.sp.jobportal.Repositories.JobPostActivityRepository;
-import com.sp.jobportal.entities.JobPostActivity;
+import com.sp.jobportal.entities.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class JobPostActivityService {
@@ -18,4 +21,28 @@ public class JobPostActivityService {
 
     }
 
+    public List<RecruiterJobsDto> getRecruiterJobs(int recruiter){
+
+        List<IRecruiterJobs> recruiterJobsDtos = jobPostActivityRepository.getRecruiterJobs(recruiter);
+
+        List<RecruiterJobsDto> recruiterJobsDtoList = new ArrayList<>();
+
+        for (IRecruiterJobs rec : recruiterJobsDtos) {
+
+            JobLocation loc = new JobLocation(rec.getLocationId(), rec.getCity(),
+                    rec.getState(), rec.getCountry());
+            JobCompany comp = new JobCompany(rec.getCompanyId(), rec.getName(),"");
+
+            recruiterJobsDtoList.add(new RecruiterJobsDto(rec.getTotalCandidates(), rec.getJob_post_id(),
+                    rec.getJob_title(), loc, comp) );
+
+        }
+        return recruiterJobsDtoList;
+    }
+
+    public JobPostActivity getOne(int id) {
+
+        return jobPostActivityRepository.findById(id).orElseThrow(() -> new RuntimeException("JobPostActivity not found"));
+
+    }
 }
