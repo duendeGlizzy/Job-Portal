@@ -17,7 +17,7 @@ import java.util.List;
 public class JobSeekerProfile {
 
     @Id
-    private int userAccountid;
+    private int userAccountId;
 
     @OneToOne
     @JoinColumn(name="user_account_id")
