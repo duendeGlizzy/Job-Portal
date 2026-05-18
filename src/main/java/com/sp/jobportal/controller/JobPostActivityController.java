@@ -42,7 +42,7 @@ public class JobPostActivityController {
                              @RequestParam(value = "location",required = false)String location,
                              @RequestParam(value = "partTime",required = false)String partTime,
                              @RequestParam(value = "fullTime",required = false)String fullTime,
-                             @RequestParam(value = "freeLance",required = false)String freeLance,
+                             @RequestParam(value = "freelance",required = false)String freeLance,
                              @RequestParam(value = "remoteOnly",required = false)String remoteOnly,
                              @RequestParam(value = "officeOnly",required = false)String officeOnly,
                              @RequestParam(value = "partialRemote",required = false)String partialRemote,
@@ -85,7 +85,7 @@ public class JobPostActivityController {
             remote = false;
         }
 
-        if(officeOnly==null && remoteOnly==null && partialRemote==null && today){
+        if(officeOnly==null && remoteOnly==null && partialRemote==null){
             officeOnly = "Office-Only";
             remoteOnly = "Remote-Only";
             partialRemote = "Partial-Remote";
