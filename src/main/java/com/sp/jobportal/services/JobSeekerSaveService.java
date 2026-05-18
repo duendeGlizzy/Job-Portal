@@ -1,0 +1,29 @@
+package com.sp.jobportal.services;
+
+import com.sp.jobportal.Repositories.JobSeekerSaveRepository;
+import com.sp.jobportal.entities.JobPostActivity;
+import com.sp.jobportal.entities.JobSeekerProfile;
+import com.sp.jobportal.entities.JobSeekerSave;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class JobSeekerSaveService {
+
+    private final JobSeekerSaveRepository jobSeekerSaveRepository;
+
+    public JobSeekerSaveService(JobSeekerSaveRepository jobSeekerSaveRepository) {
+        this.jobSeekerSaveRepository = jobSeekerSaveRepository;
+    }
+
+    public List<JobSeekerSave> getCandidatesJob(JobSeekerProfile userAccountId){
+        return jobSeekerSaveRepository.findByUserId(userAccountId);
+    }
+
+    public List<JobSeekerSave> getJobCandidates(JobPostActivity job){
+        return jobSeekerSaveRepository.findByJob(job);
+    }
+
+
+}
