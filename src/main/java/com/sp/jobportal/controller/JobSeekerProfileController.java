@@ -8,7 +8,6 @@ import com.sp.jobportal.services.JobSeekerProfileService;
 import com.sp.jobportal.util.FileDownloadUtil;
 import com.sp.jobportal.util.FileUploadUtil;
 import org.springframework.core.io.Resource;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
